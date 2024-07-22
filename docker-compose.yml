@@ -4,16 +4,16 @@ services:
   backend:
     build:
       context: ./backend
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     networks:
       - app-network
 
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "4173:4173"
+    # ports:
+    #   - "4173:4173"
     networks:
       - app-network
 
