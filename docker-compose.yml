@@ -12,8 +12,8 @@ services:
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "4173:4173"
+    # ports:
+    #  - "4173:4173"
     networks:
       - app-network
 
