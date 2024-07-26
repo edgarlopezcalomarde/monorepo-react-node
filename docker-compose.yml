@@ -1,6 +1,18 @@
 version: "3.8"
 
 services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: ExamplePassword123
+      ACCEPT_EULA: Y
+      MSSQL_PID: Express
+    ports:
+      - "3333:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - db-network
   backend:
     build:
       context: ./backend
@@ -8,6 +20,9 @@ services:
     #   - "3000:3000"
     networks:
       - app-network
+      - db-network
+    depends_on:
+      - db
 
   frontend:
     build:
@@ -16,7 +31,6 @@ services:
     #  - "4173:4173"
     networks:
       - app-network
-
   nginx:
     image: nginx:latest
     ports:
@@ -32,3 +46,7 @@ services:
 networks:
   app-network:
     driver: bridge
+  db-network:
+    driver: bridge
+volumes:
+  sql_data:
