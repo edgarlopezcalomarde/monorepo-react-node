@@ -11,11 +11,13 @@
     "dev": "tsc && (concurrently \"tsc -w\" \"tsc-alias -w\" \"node --watch dist/index.js\")"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "esbuild-wasm": "^0.23.0",
     "express": "^4.19.2",
     "glob": "^10.3.15",
     "helmet": "^7.1.0",
@@ -25,7 +27,6 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
     "@types/body-parser": "^1.19.5",
     "@types/compression": "^1.7.5",
     "@types/connect": "^3.4.38",

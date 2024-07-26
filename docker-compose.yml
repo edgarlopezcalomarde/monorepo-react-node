@@ -16,19 +16,16 @@ services:
   backend:
     build:
       context: ./backend
-    # ports:
-    #   - "3000:3000"
+      target: production
     networks:
       - app-network
       - db-network
     depends_on:
       - db
-
   frontend:
     build:
       context: ./frontend
-    # ports:
-    #  - "4173:4173"
+      target: production
     networks:
       - app-network
   nginx:
@@ -42,7 +39,6 @@ services:
     depends_on:
       - backend
       - frontend
-
 networks:
   app-network:
     driver: bridge

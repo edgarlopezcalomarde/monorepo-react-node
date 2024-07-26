@@ -1,13 +1,22 @@
-FROM node:22
+FROM node:20.16 AS base
 
-WORKDIR /app
+ENV DIR /app
+WORKDIR $DIR
 
-COPY ./package*.json ./
-
-RUN npm install
+FROM base as build
 
 COPY . .
 
-RUN npm run build
+RUN npm ci
+RUN npm run build && \
+    npm prune --production
+
+FROM base as production
+
+COPY --from=build $DIR/node_modules $DIR/node_modules
+COPY --from=build $DIR/dist $DIR/dist
+COPY --from=build $DIR/.env $DIR/.env
+
+ENV NODE_ENV=production
 
 CMD ["node", "dist/index.js"]
