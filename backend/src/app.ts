@@ -1,36 +1,42 @@
-import { createLogger, requestLogger } from "@lib/logger";
-import express, { Application, NextFunction, Request, Response, Router } from "express"
+import { initializeControllers, registerControllers } from "@lib/ControllerRegistry";
+import express, { Router } from "express";
+
 import helmet from "helmet";
 import compress from 'compression';
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-import { wrapAsyncControllers } from "./middleware/try.handler";
-import routes from "./router/api";
-import configureGlobalErrorHandler from "./middleware/error.handler";
-
-const app: Application = express();
-const router: Router = Router();
-const logger = createLogger();
+import { wrapAsyncControllers } from "@lib/AsyncController";
+import path from "path";
+import { FileController } from "./files/FileContoller";
+import bodyParser from "body-parser";
 
 
-app.use(requestLogger(logger));
+const app = express()
+const router = Router();
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
 app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard({ action: 'deny' }));
 app.use(compress());
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
+});
+
 
 wrapAsyncControllers(router)
+registerControllers([
+    FileController
+]);
+initializeControllers(router)
 
-
-router.use(cors());
-router.use("/", routes)
-
-router.use(configureGlobalErrorHandler(logger));
-app.use(router)
+app.use(router);
 
 export default app;

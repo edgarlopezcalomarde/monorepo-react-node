@@ -1,2 +1,6 @@
 import "dotenv/config"
-export const PORT = process.env.PORT || 7000
+
+export const config = {
+    PORT: process.env.PORT
+}
+

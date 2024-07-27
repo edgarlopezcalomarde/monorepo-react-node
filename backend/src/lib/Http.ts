@@ -25,3 +25,15 @@ export const APP_ERROR_MESSAGE = {
     invalidCredentials: "Correo electrónico o contraseña de usuario no válidos",
     invalidEmail: "Ingresa una dirección de correo electrónico válida",
 } as const;
+
+
+
+export class HttpException extends Error {
+    status: number;
+    error?: {};
+    constructor(status: number, message: string, error?: {}) {
+        super(message);
+        this.status = status;
+        this.error = error;
+    }
+}

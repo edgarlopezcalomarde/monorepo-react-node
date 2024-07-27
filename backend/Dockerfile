@@ -1,4 +1,4 @@
-FROM node:20.16 AS base
+FROM node:20.16-alpine3.20 AS base
 
 ENV DIR /app
 WORKDIR $DIR
@@ -14,6 +14,7 @@ RUN npm run build && \
 FROM base as production
 
 COPY --from=build $DIR/node_modules $DIR/node_modules
+COPY --from=build $DIR/uploads $DIR/uploads
 COPY --from=build $DIR/dist $DIR/dist
 COPY --from=build $DIR/.env $DIR/.env
 

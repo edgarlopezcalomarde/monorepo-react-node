@@ -22,8 +22,8 @@
 
 ### Create image
 
-    docker build -t backend .
+    docker build -t ntd-impl .
 
 ### Build and run container
 
-    docker container run -d -p 4000:3120 backend
+    docker container run -d -p 4000:3120 ntd-impl

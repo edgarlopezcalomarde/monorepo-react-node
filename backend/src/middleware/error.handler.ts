@@ -1,5 +1,5 @@
-import { APP_ERROR_MESSAGE } from "@lib/constant";
-import { HttpException } from "@lib/exception/http";
+
+import { APP_ERROR_MESSAGE, HttpException } from "@lib/Http";
 import { NextFunction, Request, Response } from "express";
 import { Logger } from "winston";
 

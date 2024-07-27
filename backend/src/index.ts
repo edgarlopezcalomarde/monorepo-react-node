@@ -1,10 +1,10 @@
-import { PORT } from "@lib/config";
+import "reflect-metadata"
+import { config } from "@lib/Config";
 import app from "./app";
 
-
 try {
-    app.listen(PORT, () => {
-        console.log(`Server running at http://localhost:${PORT}/api`);
+    app.listen(config.PORT, () => {
+        console.log(`Server running at http://localhost:${config.PORT}`);
     });
 } catch (err) {
     console.log(err);
